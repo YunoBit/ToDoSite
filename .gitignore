@@ -1,0 +1,5 @@
+todo/
+media/
+
+__pycache__/
+db.sqlite3

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo Site</title>
+    <link rel="stylesheet" type="text/static/css" href="static/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-image: url('media/images/images.png');
+          background-size: cover;
+          background-repeat: repeat;
+          background-position: center;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .container {
+            background-color: #022d77;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.967);
+            padding: 40px;
+            width: 400px;
+            max-width: 100%;
+            max-height: 50000px;
+            position: relative; /* Добавлено */
+        }
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #000000;
+            position: sticky; /* Добавлено */
+            top: 0; /* Добавлено */
+            background-color: #022d77; /* Добавлено */
+            padding: 10px; /* Добавлено */
+            border-radius: 0px 0px 0 0; /* Добавлено */
+            z-index: 1; /* Добавлено */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            background-color: #193fff;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #000000;
+        }
+        a, button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #010a81;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        a:hover, button:hover {
+                background-color: #0056b3;
+         } input[type="checkbox"] {
+                margin-right: 10px;
+         }
+
+
+        .done {
+            background-color: #5d5d5d;
+        }
+        
+    </style>
+    
+</head>
+   
+<body>
+    <div class="container">
+        <h1>Your todos</h1>
+        <ul>
+            {% for todo in todos %}
+                    <form method="post" action="">
+                <li class="{% if todo.completed %}done{% endif %}">
+                    {% csrf_token %}
+                        <a href="{% url 'add_done' todo.id %}">                        
+                            <input type="checkbox" class="mark-done" {% if todo.completed %}checked{% endif %}>
+                        </a>
+                    
+                    <h3>{{ todo.title }}</h3>
+                    <p>{{ todo.task }}</p>
+                    <p>{{todo.created_at}}</p>
+                    <a href="{% url 'detail' todo.id %}">Detail</a>
+                </li>
+                    </form>
+            {% endfor %}
+
+        </ul>
+        <a href="{% url 'create' %}">Create New ToDo</a>
+        <a href="{% url 'done_tasks' %}">View Completed Tasks</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const markDoneCheckboxes = document.querySelectorAll('.mark-done');
+            markDoneCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const listItem = this.parentElement;
+                    listItem.classList.toggle('done'); 
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
