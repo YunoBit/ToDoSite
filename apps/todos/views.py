@@ -1,10 +1,15 @@
 from django.shortcuts import render , redirect
+from django.db.models import Q
 
 from apps.todos.models import ToDo
 
 
 def homepage(request):
-    todos = ToDo.objects.all()
+    if 'key_word' in request.GET:
+        key = request.GET.get('words')
+        todos = ToDo.objects.filter(Q(title__icontains=key) | Q(task=key))
+    else:
+        todos = ToDo.objects.all()
     return render(request, 'index.html', locals())
 
 def create(request):

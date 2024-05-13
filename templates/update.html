@@ -31,7 +31,7 @@
         h1 {
             margin-top: 0;
             text-align: center;
-            color: #333;
+            color: #000000;
         }
         form {
             display: flex;
@@ -63,17 +63,19 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        button[type="submit"] {
+        a, button[type="submit"] {
             padding: 10px 20px;
-            border-left: none;
+            border-bottom-left-radius: 16px;
             border-radius: 4px;
             background-color: #010a81;
             color: #fff;
             font-size: 16px;
+            text-align: center;
+            margin-bottom: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        button[type="submit"]:hover {
+        a:hover , button[type="submit"]:hover {
             background-color: #0056b3;
         }
     </style>
@@ -86,7 +88,13 @@
             <input type="text" name="title" value="{{ todos.title }}" placeholder="Title">
             <textarea name="task" placeholder="Task">{{ todos.task }}</textarea>
             <button type="submit">Update</button>
+            <a onclick="goBack()">Undo</a>
         </form>
     </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 </html>
